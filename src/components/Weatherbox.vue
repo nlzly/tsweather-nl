@@ -7,9 +7,13 @@ defineProps<{
 </script>
 
 <template>
-    <div class="item">
+    <div class="flex flex-col items-center">
+        Weather Today
         <img :src=weatherData.imageUrl alt="weather icon"/>
-        <div class="flex flex-row">
+        <div class="text-center">
+            {{ weatherData.currentWeather.currentConditions }}
+        </div>
+        <div class="flex flex-row gap-1">
             <div>
                 Current Temp:
             </div>

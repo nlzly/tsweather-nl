@@ -6,17 +6,20 @@ import type { CoordinatePair } from '@/types/CoordinatePair';
 import CoordinateHelper from '@/services/CoordinateHelper';
 import Weatherbox from './Weatherbox.vue';
 import type { WeatherboxInput } from '@/types/WeatherboxInput';
-import type { Ref } from 'vue'
+import type { Ref } from 'vue';
+import Utils from '@/services/Utils';
+import { temperatureUnits } from '@/services/Utils';
 
 let data = ref();
 let imageUrl = ref("");
 let weatherData: Ref<WeatherboxInput> = 
   ref<WeatherboxInput>({
     imageUrl: "", 
-    currentWeather: {  
+    currentWeather: {
       currentTemp: 0,
       high: 0,
       low: 0,
+      currentConditions: '',
     }
     });
 onMounted(async () => {
@@ -25,14 +28,15 @@ onMounted(async () => {
         const response = await ApiService.getWeather<WeatherResponse>(userLocaiton);
         data.value = response.data;
         imageUrl.value = `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-        weatherData = ref({
+        weatherData.value = {
           imageUrl:`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
           currentWeather: { 
-            currentTemp: response.data.main.temp,
-            high: response.data.main.temp_max,
-            low: response.data.main.temp_min,
+            currentTemp: Utils.convertTemperature(response.data.main.temp, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
+            high: Utils.convertTemperature(response.data.main.temp_max, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
+            low: Utils.convertTemperature(response.data.main.temp_min, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
+            currentConditions: response.data.weather[0].main
           }
-        })
+        }
         console.log(response);
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -42,7 +46,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    {{ data }}
     <Weatherbox :weather-data="weatherData"/>
   </div>
 </template>
