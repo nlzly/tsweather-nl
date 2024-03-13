@@ -1,6 +1,6 @@
 export interface WeatherResponse {
     coord : CoordinatePair;
-    weather : Weather;
+    weather : Weather[];
     main: WeatherDescription;
 }
 
@@ -12,6 +12,7 @@ interface CoordinatePair {
 interface Weather {
     main: string;
     description: string;
+    icon:string;
 }
 
 interface WeatherDescription {

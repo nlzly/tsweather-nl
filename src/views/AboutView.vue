@@ -4,7 +4,6 @@ import WeatherComponent from '../components/WeatherComponent.vue'
   
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
     <WeatherComponent/>
   </div>
 </template>
