@@ -3,7 +3,7 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { CoordinatePair } from '@/types/CoordinatePair';
 
-const API_URL = 'https://api.openweathermap.org/data/2.5/';
+const API_URL = 'http://api.weatherapi.com/v1/forecast.json';
 const OpenweatherKey : any = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export interface ApiResponse<T> {
@@ -16,16 +16,16 @@ export interface ApiResponse<T> {
 }
 
 interface WeatherRequestParams {
-    lat : number;
-    lon : number;
-    appId : string;
+    q : string;
+    key : string;
+    days: number;
 } 
 // https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 
 export const ApiService = {
-    async getWeather<T>(input : CoordinatePair): Promise<ApiResponse<T>> {
+    async getWeather<T>(input : CoordinatePair, days: number): Promise<ApiResponse<T>> {
         try {
-            const params : WeatherRequestParams = { lat: input.latitide, lon: input.longitude, appId : OpenweatherKey}
+            const params : WeatherRequestParams = { q: `${input.latitide},${input.longitude}`, key : OpenweatherKey, days : days}
             const response: AxiosResponse<T> = await axios.get(`${API_URL}weather`, { params });
             return {
                 data: response.data,

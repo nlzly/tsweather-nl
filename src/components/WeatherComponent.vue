@@ -26,18 +26,9 @@ let weatherData: Ref<WeatherboxInput> =
 onMounted(async () => {
       try {
         const userLocaiton : CoordinatePair = await CoordinateHelper.getCoords();
-        const response = await ApiService.getWeather<WeatherResponse>(userLocaiton);
+        const response = await ApiService.getWeather<WeatherResponse>(userLocaiton, 5);
         data.value = response.data;
-        weatherData.value = {
-          imageUrl:`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
-          temperatureUnits: temperatureUnits.Celsius,
-          currentWeather: { 
-            currentTemp: Utils.convertTemperature(response.data.main.temp, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
-            high: Utils.convertTemperature(response.data.main.temp_max, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
-            low: Utils.convertTemperature(response.data.main.temp_min, temperatureUnits.Kelvin, temperatureUnits.Celsius ),
-            currentConditions: response.data.weather[0].main
-          }
-        }
+
         dataLoaded.value = true;
         console.log(response);
       } catch (error) {
@@ -48,6 +39,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <Weatherbox v-if="dataLoaded" :weather-data="weatherData"/>
+    <Weatherbox v-if="dataLoaded" :weather-data="data"/>
   </div>
 </template>

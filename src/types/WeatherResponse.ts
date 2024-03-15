@@ -1,24 +1,46 @@
 export interface WeatherResponse {
-    coord : CoordinatePair;
-    weather : Weather[];
-    main: WeatherDescription;
+    location: location;
+    current: current;
+    forecast: forecast;
 }
 
-interface CoordinatePair {
-    lon : number;
-    lat : number;
+interface location {
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
 }
 
-interface Weather {
-    main: string;
-    description: string;
-    icon:string;
+interface current {
+    temp_c: number;
+    temp_f: number;
+    condition: condition;
+
 }
 
-interface WeatherDescription {
-    temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    humidity: number;
+interface condition {
+    text: string;
+    icon: string;
+    code: number;
+}
+
+interface forecast {
+    forecastday: forecastday[]
+}
+
+interface forecastday {
+    date: string;
+    date_epoch: number;
+    day: day; 
+}
+
+interface day {
+    maxtemp_c: string;
+    maxtemp_f: string;
+    mintemp_c: string;
+    mintemp_f: string;
+    avgtemp_c: string;
+    avgtemp_f: string;
+    condition: condition;
 }

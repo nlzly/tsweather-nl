@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import type { WeatherboxInput } from '@/types/WeatherboxInput';
+import type { WeatherResponse } from '@/types/WeatherResponse';
 
 defineProps<{
-    weatherData:WeatherboxInput
+    weatherData:WeatherResponse
 }>()
 </script>
 
 <template>
     <div class="flex flex-col items-center m-4 border rounded-md weatherboxcontainer">
         Weather Today
-        <img :src=weatherData.imageUrl alt="weather icon"/>
+        <img :src=weatherData.current.condition.icon alt="weather icon"/>
         <div class="text-center">
-            {{ weatherData.currentWeather.currentConditions }}
+            {{ weatherData.current.condition.text }}
         </div>
         <div class="flex flex-row mx-6 gap-1">
             <div>
                 Current Temp:
             </div>
             <div>
-                {{weatherData.currentWeather.currentTemp}} °{{ weatherData.temperatureUnits }}
+                {{weatherData.current.temp_c}} °C
             </div>
         </div>
         <div>
-            High: {{weatherData.currentWeather.high}} °{{ weatherData.temperatureUnits }}
+            High: {{weatherData.forecast.forecastday[0].day.maxtemp_c}} °C
         </div>
         <div>
-            Low: {{weatherData.currentWeather.low}} °{{ weatherData.temperatureUnits }}
+            Low: {{weatherData.forecast.forecastday[0].day.mintemp_c}} °C
         </div>
     </div>
 </template>
