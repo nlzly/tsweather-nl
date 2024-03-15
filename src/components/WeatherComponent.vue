@@ -5,24 +5,10 @@ import { ApiService } from '../services/WeatherService';
 import type { CoordinatePair } from '@/types/CoordinatePair';
 import CoordinateHelper from '@/services/CoordinateHelper';
 import Weatherbox from './Weatherbox.vue';
-import type { WeatherboxInput } from '@/types/WeatherboxInput';
-import type { Ref } from 'vue';
-import Utils from '@/services/Utils';
-import { temperatureUnits } from '@/services/Utils';
 
 let data = ref();
 let dataLoaded = ref(false);
-let weatherData: Ref<WeatherboxInput> = 
-  ref<WeatherboxInput>({
-    imageUrl: "", 
-    temperatureUnits: temperatureUnits.Celsius,
-    currentWeather: {
-      currentTemp: 0,
-      high: 0,
-      low: 0,
-      currentConditions: '',
-    }
-    });
+
 onMounted(async () => {
       try {
         const userLocaiton : CoordinatePair = await CoordinateHelper.getCoords();
@@ -39,6 +25,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <Weatherbox v-if="dataLoaded" :weather-data="data"/>
+    <div v-if="dataLoaded" v-for="weatherDay in data.forecast.forecastday">
+      <Weatherbox :weather-data="weatherDay"/>
+    </div>
   </div>
 </template>
