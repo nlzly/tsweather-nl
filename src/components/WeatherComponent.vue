@@ -53,6 +53,9 @@ onMounted(async () => {
     <div v-if="locationData">
       <h2>{{ locationData[0].name }}, {{ locationData[0].region }}, {{ locationData[0].country }}</h2>
     </div>
+    <div v-if="!locationData">
+      <h2>Current Location</h2>
+    </div>
     <div v-if="dataLoaded" v-for="weatherDay in data.forecast.forecastday">
       <Weatherbox :weather-data="weatherDay" :temp-unit="tempUnit"/>
     </div>
