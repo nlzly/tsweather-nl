@@ -44,3 +44,13 @@ interface day {
     avgtemp_f: string;
     condition: condition;
 }
+
+export interface LocationResponse {
+    id: number;
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
+    url: string;
+  }
