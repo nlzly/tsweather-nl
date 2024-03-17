@@ -1,10 +1,7 @@
 # tsweather
 
 A weather app using Vue and Typescript.
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Weather data provided by : http://api.weatherapi.com/
 
 ## Customize configuration
 
