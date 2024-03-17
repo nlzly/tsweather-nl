@@ -10,6 +10,7 @@ let data = ref();
 let dataLoaded = ref(false);
 let locationInput = ref(''); // to hold the user input
 let locationData = ref();
+const error = ref('');
 let tempUnit = ref(localStorage.getItem('tempUnit') || 'Celsius');
 
 const switchTempUnit = () => {
@@ -19,8 +20,13 @@ const switchTempUnit = () => {
 
 const submitForm = async () => {
   try {
-    const response = await ApiService.getLocations<LocationResponse>(locationInput.value);
-    locationData.value = response.data;
+    const response = await ApiService.getLocations<LocationResponse[]>(locationInput.value);
+    if (response.data.length > 0) {
+      locationData.value = response.data;
+      error.value = '';
+    } else {
+      error.value = `Location not found ${locationInput.value}. Please try again.`;
+    }
     console.log(response.data);
     const inputLocation : CoordinatePair = {
       latitide: locationData.value[0].lat,
@@ -60,6 +66,7 @@ onMounted(async () => {
         </form>
 
       </div>
+      <div v-if="error" class="error">{{ error }}</div>
       <div v-if="locationData">
           <h2>{{ locationData[0].name }}, {{ locationData[0].region }}, {{ locationData[0].country }}</h2>
       </div>
@@ -97,5 +104,8 @@ onMounted(async () => {
   cursor: pointer;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
   display: block;
+}
+.error {
+  color: red;
 }
 </style>
