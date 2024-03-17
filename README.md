@@ -1,7 +1,7 @@
 # tsweather
 
 A weather app using Vue and Typescript.
-Weather data provided by : http://api.weatherapi.com/
+Weather data provided by : https://www.weatherapi.com/docs/
 
 ## Customize configuration
 
