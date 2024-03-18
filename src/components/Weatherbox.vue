@@ -10,7 +10,7 @@ defineProps<{
 <template>
     <div class="flex flex-col items-center m-4">
         <div class="flex flex-col rounded-md items-center border p-2 weatherbox">
-            {{ new Date(weatherData.date).toLocaleDateString('en-US', { weekday: 'long' }) }} {{ weatherData.date }}
+            {{ new Date(weatherData.date).toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }) }} {{ weatherData.date }}
             <img :src=weatherData.day.condition.icon alt="weather icon"/>
             <div class="text-center">
                 {{ weatherData.day.condition.text }}
